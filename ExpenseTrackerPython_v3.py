@@ -30,6 +30,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from gspread.exceptions import WorksheetNotFound
 from dotenv import load_dotenv
+import json
 
 # --- Configuration ---
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -53,7 +54,8 @@ SALARY_SHEET = 'Salary'
 PAYMENT_METHODS = ['Cash', 'UPI', 'Card', 'Bank Transfer', 'Other']
 
 # Initialize Google Sheets
-credentials = ServiceAccountCredentials.from_json_keyfile_name(GOOGLE_SHEETS_CREDENTIALS, SCOPE)
+credentials_info = json.loads(os.getenv("GOOGLE_SHEETS_CREDENTIALS"))
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials_info, SCOPE)
 gc = gspread.authorize(credentials)
 
 def get_or_create_worksheet(spreadsheet, title, headers):
