@@ -137,7 +137,7 @@ async def handle_message(update: Update, context: CallbackContext):
             for method in PAYMENT_METHODS:
                 if payment_method_raw.lower() == method.lower():
                     payment_method = method
-                break
+                    break
             else:
                 payment_method = "Other"
     
